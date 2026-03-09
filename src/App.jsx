@@ -9,7 +9,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Coming_soon/>}></Route>
-          <Route path='/balari-asset-page' element={<Assets_page/>}></Route>
+          <Route path='/balariassetpage' element={<Assets_page/>}></Route>
         </Routes>
       </Router>
     </>
