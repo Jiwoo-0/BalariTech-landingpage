@@ -8,6 +8,7 @@ const Coming_soon = () => {
       {/* <Logo className="w-96"/> */}
       
       <h1 className='text-white'>IS COMING SOON</h1>
+      <p>test</p>
     </div>
   )
 }
