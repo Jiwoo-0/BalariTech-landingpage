@@ -2,6 +2,7 @@ import React from 'react'
 import vl_logo_svg from '../assets/Vertical-Lockup.svg'
 import hl_logo_svg from '../assets/logo.svg'
 import vl_logo_png from '../assets/Vertical-Lockup.png'
+import bg_0d2d2e_png from '../assets/bg-0d2d2e-1x1.png'
 
 const Assets_page = () => {
   return (
@@ -16,6 +17,7 @@ const Assets_page = () => {
         <div className='bg-gray-100'>
           <h3>PNG</h3>
           <img src={vl_logo_png} alt="horizontal lockup" className='w-64'/>
+          <img src={bg_0d2d2e_png} alt="bg-0d2d2e-1x1" className='w-64'/>
         </div>
       </div>
     </div>
