@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Headland+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,22 +11,38 @@
 
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
-  background-color: #ffffff;
+  background-color: #F2F2F2;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --brand-primary: #bd9749;
+  --brand-secondary: #1f2528;
+  --brand-accent:  #155146;
+  --brand-textwhite: hsl(0, 0%, 100%);
+  --brand-textblack: hsl(0, 0%, 0%);
+
 }
 
-h1, h2 {
+@theme inline {
+  --color-primary: var(--brand-primary);
+  --color-secondary: var(--brand-secondary);
+  --color-accent: var(--brand-accent);
+}
+
+h1 {
   font-family: "Michroma", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
+h2, h3, h4, h5, p {
+  font-family: "Montserrat", sans-serif;
+}
+
 p{
-  font-family: "Inter", system-ui, sans-serif;
   font-style: normal;
   font-weight: 400;
 }
