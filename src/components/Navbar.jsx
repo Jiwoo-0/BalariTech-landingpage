@@ -1,27 +1,61 @@
 
-import React from 'react'
+import React from 'react';
 import logo from "../assets/logo.svg";
+import { Button } from './button';
+
+const NAV_LINKS = [
+  { label: 'Services', href: '#services' },
+  { label: 'Roadmap', href: '#roadmap' },
+  { label: 'Work', href: '#work' },
+  { label: 'Why Balari', href: '#why-balari' },
+  { label: 'FAQ', href: '#faq' },
+];
+
+const NavLink = ({ label, href }) => (
+  <a 
+    href={href}
+    className='text-white font-body hover:text-primary transition-colors duration-200'
+  >
+    {label}
+  </a>
+);
 
 const Navbar = () => {
   return (
-    <>
-    <header className='flex justify-center items-center p-6 gap-2 bg-transparent absolute top-0 left-0 w-full z-50'>
-        <div className='bg-[#1F2528] flex rounded-full px-[20px] py-[15px] justify-between w-full items-center'>
-            <div>
-                <img src={logo} className="h-[25px] w-auto" alt="Logo" />
-            </div>
-            <div className='flex gap-8 text-white items-center'>
-                <a href='#'>Services</a>
-                <a href='#'>Roadmap</a>
-                <a href='#'>Work</a>
-                <a href='#'>Why Balari</a>
-                <a href='#'>FAQ</a>
-                <a href='#' className='bg-[#BD9749] px-[18px] py-[9px] rounded-full'>Book Your Consult</a>
-            </div>
-        </div>
-    </header>
-    </>
-  )
-}
+    <header className='fixed top-0 left-0 w-full z-50 bg-transparent'>
+      <nav className='flex justify-center items-center p-4 md:p-6 gap-2'>
+        <div className='bg-secondary flex rounded-full px-6 md:px-8 py-4 justify-between w-full max-w-7xl items-center'>
+          {/* Logo */}
+          <div className='flex-shrink-0'>
+            <img 
+              src={logo} 
+              className="h-6 md:h-7 w-auto" 
+              alt="Balari Logo" 
+            />
+          </div>
 
-export default Navbar
+          {/* Navigation Links - hidden on mobile, shown on desktop */}
+          <div className='hidden md:flex gap-8 items-center'>
+            {NAV_LINKS.map((link) => (
+              <NavLink key={link.href} {...link} />
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <div className='flex-shrink-0'>
+            <Button 
+              variant="primary" 
+              size="sm"
+              href="#consult"
+              className='text-sm'
+            >
+              Book Your Consult
+            </Button>
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+export default Navbar;

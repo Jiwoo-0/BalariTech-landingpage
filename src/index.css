@@ -24,34 +24,27 @@
   --brand-textwhite: hsl(0, 0%, 100%);
   --brand-textblack: hsl(0, 0%, 0%);
 
+  --font-display: "Michroma", sans-serif;
+  --font-heading: "Montserrat", sans-serif;
+  --font-body: "Montserrat", sans-serif;
+
+  --text-display: 3.25rem;
+  --text-h1: 2.5rem;
+  --text-h2: 2rem;
+  --text-h3: 1.5rem;
+  --text-h4: 1.25rem;
+  --text-h5: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
 }
 
+
 @theme inline {
-  --color-primary: var(--brand-primary);
+  --bg-primary: var(--brand-primary);
   --color-secondary: var(--brand-secondary);
   --color-accent: var(--brand-accent);
 }
 
-h1 {
-  font-family: "Michroma", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-h2, h3, h4, h5, p {
+p {
   font-family: "Montserrat", sans-serif;
-}
-
-p{
-  font-style: normal;
-  font-weight: 400;
-}
-
-
-h1{
-  font-size: 48px;
-}
-
-h2{
-  font-size: 1.5rem;
 }
