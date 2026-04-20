@@ -45,6 +45,10 @@
   --color-accent: var(--brand-accent);
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 p {
   font-family: "Montserrat", sans-serif;
 }

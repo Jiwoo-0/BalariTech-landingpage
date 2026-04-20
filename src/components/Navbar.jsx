@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: 'Roadmap', href: '#roadmap' },
   { label: 'Work', href: '#work' },
   { label: 'Why Balari', href: '#why-balari' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 const NavLink = ({ label, href }) => (

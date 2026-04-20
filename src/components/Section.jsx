@@ -23,6 +23,7 @@ export function Section({
   return (
     <Tag
       className={clsx(
+        "scroll-mt-24",
         bgVariants[bg],
         paddingVariants[padding],
         className
