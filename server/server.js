@@ -1,6 +1,16 @@
-const express = require('express')
-const app = express()
+const app = require("./app");
 
-app.get("/api", (req, res)=>{
-    res.json({"users": ["userOne", "userTwo", "userThree"]})
-})
+const PORT = process.env.PORT || 5000;
+
+app.get("/", (_req, res) => {
+    res.json({ status: "ok", message: "Server is running" });
+});
+
+app.use((_req, res) => {
+    res.status(404).json({ message: "Route not found" });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+

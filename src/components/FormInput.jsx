@@ -10,13 +10,58 @@ export function FormInput({
   onChange,
   required = false,
   className = "",
+  error = "",
   ...props
 }) {
-  const commonClass = `${baseInputClass} ${className}`;
+  const commonClass = `${baseInputClass} ${error ? "border-red-500" : ""} ${className}`;
 
   if (type === "textarea") {
     return (
-      <textarea
+      <div className="flex flex-col gap-1">
+        <textarea
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          required={required}
+          className={commonClass}
+          {...props}
+        />
+        {error && <span className="text-red-400 text-sm">{error}</span>}
+      </div>
+    );
+  }
+
+  if (type === "select") {
+    const { options, ...selectProps } = props;
+    return (
+      <div className="flex flex-col gap-1">
+        <select
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          className={commonClass}
+          {...selectProps}
+        >
+          <option value="" disabled className="bg-secondary">
+            {placeholder}
+          </option>
+          {options?.map((option) => (
+            <option key={option} value={option} className="bg-secondary">
+              {option}
+            </option>
+          ))}
+        </select>
+        {error && <span className="text-red-400 text-sm">{error}</span>}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-1">
+      <input
+        type={type}
         name={name}
         placeholder={placeholder}
         value={value}
@@ -25,42 +70,7 @@ export function FormInput({
         className={commonClass}
         {...props}
       />
-    );
-  }
-
-  if (type === "select") {
-    const { options, ...selectProps } = props;
-    return (
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        className={commonClass}
-        {...selectProps}
-      >
-        <option value="" disabled className="bg-secondary">
-          {placeholder}
-        </option>
-        {options?.map((option) => (
-          <option key={option} value={option} className="bg-secondary">
-            {option}
-          </option>
-        ))}
-      </select>
-    );
-  }
-
-  return (
-    <input
-      type={type}
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className={commonClass}
-      {...props}
-    />
+      {error && <span className="text-red-400 text-sm">{error}</span>}
+    </div>
   );
 }

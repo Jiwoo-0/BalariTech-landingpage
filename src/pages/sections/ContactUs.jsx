@@ -21,17 +21,124 @@ const initialFormData = {
   date: "",
 };
 
+const initialErrors = {
+  name: "",
+  email: "",
+  businessName: "",
+  websiteOrSocial: "",
+  needHelp: "",
+  projectDetails: "",
+  date: "",
+};
+
+// Validation functions
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validateForm = (data) => {
+  const newErrors = { ...initialErrors };
+  let isValid = true;
+
+  // Required field validation
+  if (!data.name.trim()) {
+    newErrors.name = "Name is required";
+    isValid = false;
+  }
+
+  if (!data.email.trim()) {
+    newErrors.email = "Email is required";
+    isValid = false;
+  } else if (!validateEmail(data.email)) {
+    newErrors.email = "Please enter a valid email address";
+    isValid = false;
+  }
+
+  if (!data.businessName.trim()) {
+    newErrors.businessName = "Business name is required";
+    isValid = false;
+  }
+
+  if (!data.needHelp.trim()) {
+    newErrors.needHelp = "Please select an option";
+    isValid = false;
+  }
+
+  if (!data.projectDetails.trim()) {
+    newErrors.projectDetails = "Please tell us about your project";
+    isValid = false;
+  }
+
+  if (!data.date) {
+    newErrors.date = "Please select a date";
+    isValid = false;
+  }
+
+  return { isValid, errors: newErrors };
+};
+
 const ContactUs = () => {
   const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState(initialErrors);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setSubmitMessage({ type: "", text: "" });
+
+    // Validate form
+    const { isValid, errors: validationErrors } = validateForm(formData);
+    if (!isValid) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitMessage({
+          type: "success",
+          text: "Your message has been sent successfully! We'll get back to you soon.",
+        });
+        setFormData(initialFormData);
+        setErrors(initialErrors);
+      } else {
+        setSubmitMessage({
+          type: "error",
+          text: data.error || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitMessage({
+        type: "error",
+        text: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Section bg="secondary" id="contact">
@@ -47,6 +154,18 @@ const ContactUs = () => {
             </p>
           </div>
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            {submitMessage.text && (
+              <div
+                className={`p-4 rounded-lg ${
+                  submitMessage.type === "success"
+                    ? "bg-green-500/20 border border-green-500/50 text-green-100"
+                    : "bg-red-500/20 border border-red-500/50 text-red-100"
+                }`}
+              >
+                {submitMessage.text}
+              </div>
+            )}
+
             <div className="grid grid-cols-2 gap-4">
               <FormInput
                 type="text"
@@ -54,7 +173,7 @@ const ContactUs = () => {
                 placeholder="Your name"
                 value={formData.name}
                 onChange={handleChange}
-                required
+                error={errors.name}
               />
               <FormInput
                 type="email"
@@ -62,7 +181,7 @@ const ContactUs = () => {
                 placeholder="Your email"
                 value={formData.email}
                 onChange={handleChange}
-                required
+                error={errors.email}
               />
             </div>
 
@@ -72,15 +191,16 @@ const ContactUs = () => {
               placeholder="Business name"
               value={formData.businessName}
               onChange={handleChange}
-              required
+              error={errors.businessName}
             />
 
             <FormInput
               type="text"
               name="websiteOrSocial"
-              placeholder="Website or social link"
+              placeholder="Website or social link (optional)"
               value={formData.websiteOrSocial}
               onChange={handleChange}
+              error={errors.websiteOrSocial}
             />
 
             <FormInput
@@ -90,7 +210,7 @@ const ContactUs = () => {
               value={formData.needHelp}
               onChange={handleChange}
               options={helpOptions}
-              required
+              error={errors.needHelp}
             />
 
             <FormInput
@@ -100,6 +220,7 @@ const ContactUs = () => {
               value={formData.projectDetails}
               onChange={handleChange}
               rows="5"
+              error={errors.projectDetails}
             />
 
             <FormInput
@@ -107,11 +228,16 @@ const ContactUs = () => {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              required
+              error={errors.date}
             />
 
-            <Button className="w-full" variant="primary" size="lg">
-              Send message
+            <Button
+              className="w-full"
+              variant="primary"
+              size="lg"
+              disabled={isLoading}
+            >
+              {isLoading ? "Sending..." : "Send message"}
             </Button>
           </form>
         </div>
