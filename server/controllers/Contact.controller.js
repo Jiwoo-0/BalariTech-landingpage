@@ -6,7 +6,10 @@ const {
 
 const submitContact = async (req, res) => {
   const fromEmail = process.env.RESEND_FROM_EMAIL;
-  const toEmail = process.env.RESEND_TO_EMAIL;
+  const toEmail = (process.env.RESEND_TO_EMAIL || "")
+    .split(",")
+    .map((email)=>email.trim())
+    .filter(Boolean);
 
   if (!resend || !fromEmail || !toEmail) {
     return res.status(500).json({
@@ -19,7 +22,7 @@ const submitContact = async (req, res) => {
   try {
     const { error } = await resend.emails.send({
       from: fromEmail,
-      to: [toEmail],
+      to: toEmail,
       replyTo: req.contact.email,
       subject: `New Balari contact form submission from ${req.contact.name}`,
       html: buildContactEmailHtml(req.contact),
