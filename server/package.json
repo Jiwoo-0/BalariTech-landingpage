@@ -1,23 +1,20 @@
 {
-  "name": "server",
+  "name": "balari-server",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "cors": "^2.8.6",
+    "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "nodemailer": "^8.0.5",
-    "nodemon": "^3.1.14",
     "resend": "^6.12.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

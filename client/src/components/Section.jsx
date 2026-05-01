@@ -16,12 +16,14 @@ export function Section({
   // Text/content alignment
   align = "left",         // "left" | "center" | "right"
 
-  as: Tag = "section",
+  as = "section",
 
   ...props
 }) {
+  const Component = as;
+
   return (
-    <Tag
+    <Component
       className={clsx(
         "scroll-mt-24",
         bgVariants[bg],
@@ -37,7 +39,7 @@ export function Section({
       )}>
         {children}
       </div>
-    </Tag>
+    </Component>
   );
 }
 

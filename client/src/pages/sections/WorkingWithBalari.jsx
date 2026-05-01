@@ -3,7 +3,7 @@ import { Section } from "../../components/Section";
 import WwCards from "../../components/WwCards";
 import cardImage1 from "../../assets/working-with/Clear Work Card.png";
 import cardImage2 from "../../assets/working-with/Clear Work Card 2.png";
-import { Button } from "../../components/button";
+import { Button } from "../../components/Button";
 
 const WorkingWithBalari = () => {
   return (

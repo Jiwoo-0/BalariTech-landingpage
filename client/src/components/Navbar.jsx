@@ -1,7 +1,7 @@
 
 import React from 'react';
 import logo from "../assets/logo.svg";
-import { Button } from './button';
+import { Button } from "./Button";
 
 const NAV_LINKS = [
   { label: 'Services', href: '#services' },

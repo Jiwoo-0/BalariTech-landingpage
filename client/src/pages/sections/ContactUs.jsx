@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Section } from "../../components/Section";
-import { Button } from "../../components/button";
+import { Button } from "../../components/Button";
 import { FormInput } from "../../components/FormInput";
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ?? "";
 
 const helpOptions = [
   "Website build",
@@ -11,7 +14,7 @@ const helpOptions = [
   "Not sure yet",
 ];
 
-const initialFormData = {
+const createInitialFormData = () => ({
   name: "",
   email: "",
   businessName: "",
@@ -19,7 +22,9 @@ const initialFormData = {
   needHelp: "",
   projectDetails: "",
   date: "",
-};
+  companyWebsite: "",
+  startedAt: new Date().toISOString(),
+});
 
 const initialErrors = {
   name: "",
@@ -31,7 +36,6 @@ const initialErrors = {
   date: "",
 };
 
-// Validation functions
 const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -41,7 +45,6 @@ const validateForm = (data) => {
   const newErrors = { ...initialErrors };
   let isValid = true;
 
-  // Required field validation
   if (!data.name.trim()) {
     newErrors.name = "Name is required";
     isValid = false;
@@ -79,7 +82,7 @@ const validateForm = (data) => {
 };
 
 const ContactUs = () => {
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(createInitialFormData);
   const [errors, setErrors] = useState(initialErrors);
   const [isLoading, setIsLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
@@ -87,7 +90,7 @@ const ContactUs = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field when user starts typing
+
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -97,7 +100,6 @@ const ContactUs = () => {
     e.preventDefault();
     setSubmitMessage({ type: "", text: "" });
 
-    // Validate form
     const { isValid, errors: validationErrors } = validateForm(formData);
     if (!isValid) {
       setErrors(validationErrors);
@@ -107,7 +109,7 @@ const ContactUs = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,14 +124,19 @@ const ContactUs = () => {
           type: "success",
           text: "Your message has been sent successfully! We'll get back to you soon.",
         });
-        setFormData(initialFormData);
+        setFormData(createInitialFormData());
         setErrors(initialErrors);
-      } else {
-        setSubmitMessage({
-          type: "error",
-          text: data.error || "Something went wrong. Please try again.",
-        });
+        return;
       }
+
+      if (data.errors) {
+        setErrors((prev) => ({ ...prev, ...data.errors }));
+      }
+
+      setSubmitMessage({
+        type: "error",
+        text: data.error || data.message || "Something went wrong. Please try again.",
+      });
     } catch (error) {
       console.error("Form submission error:", error);
       setSubmitMessage({
@@ -140,12 +147,13 @@ const ContactUs = () => {
       setIsLoading(false);
     }
   };
+
   return (
     <Section bg="secondary" id="contact">
       <div className="flex gap-8">
-        <div className="flex flex-col gap-7 w-full max-w-2xl">
+        <div className="flex w-full max-w-2xl flex-col gap-7">
           <div>
-            <h2 className="font-heading font-bold text-h2 text-white">
+            <h2 className="font-heading text-h2 font-bold text-white">
               Can't find what you're looking for?
             </h2>
             <p className="text-white/80">
@@ -153,13 +161,27 @@ const ContactUs = () => {
               We'll get back to you with the clearest next step we can.
             </p>
           </div>
+
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="companyWebsite">Leave this blank</label>
+              <input
+                id="companyWebsite"
+                type="text"
+                name="companyWebsite"
+                value={formData.companyWebsite}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             {submitMessage.text && (
               <div
-                className={`p-4 rounded-lg ${
+                className={`rounded-lg border p-4 ${
                   submitMessage.type === "success"
-                    ? "bg-green-500/20 border border-green-500/50 text-green-100"
-                    : "bg-red-500/20 border border-red-500/50 text-red-100"
+                    ? "border-green-500/50 bg-green-500/20 text-green-100"
+                    : "border-red-500/50 bg-red-500/20 text-red-100"
                 }`}
               >
                 {submitMessage.text}
@@ -219,7 +241,7 @@ const ContactUs = () => {
               placeholder="Tell us about your project and what you're looking to achieve"
               value={formData.projectDetails}
               onChange={handleChange}
-              rows="5"
+              rows={5}
               error={errors.projectDetails}
             />
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Section } from "../../components/Section";
-import { Button } from "../../components/button";
+import { Button } from "../../components/Button";
 import logo from "../../assets/icons/Brandmark.svg"
 
 const CTA = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Section } from "../../components/Section";
 import logo from "../../assets/logo.svg";
-import { Button } from "../../components/button";
+import { Button } from "../../components/Button";
 
 const Story = () => {
   return (

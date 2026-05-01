@@ -1,6 +1,6 @@
 import React from "react";
 import Tags from "./Tags";
-import { Button } from "./button";
+import { Button } from "./Button";
 
 export function ServiceCard({
   number,

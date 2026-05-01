@@ -1,16 +1,83 @@
-# React + Vite
+# Balari Tech Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repo now uses a simple `client/` + `server/` structure:
+This project now uses a single Vercel deployment rooted at `client/`:
 
-Currently, two official plugins are available:
+- `client/`: React + Vite frontend
+- `server/`: Express API for the contact form using Resend
+- `client/api/contact.js`: Vercel serverless function for the contact form
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup
 
-## React Compiler
+1. Install the frontend packages:
+1. Install the client packages:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run install:client
+```
 
-## Expanding the ESLint configuration
+2. Install the server packages:
+2. Copy `client/.env.example` to `client/.env.local` for local testing or add the same variables in Vercel Project Settings.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run install:server
+```
+Required email env values:
+
+3. Create your env files:
+- `RESEND_API_KEY=...`
+- `RESEND_FROM_EMAIL=Balari Tech <your-verified-domain@example.com>`
+- `RESEND_TO_EMAIL=your@email.com`
+
+- Copy `client/.env.example` to `client/.env` if you want to point the frontend at a hosted API.
+- Copy `server/.env.example` to `server/.env` and fill in your Resend values.
+Optional:
+
+Required server env values:
+- `VITE_API_BASE_URL=`
+
+- `PORT=5000`
+- `CLIENT_URL=http://localhost:5173`
+- `RESEND_API_KEY=...`
+- `RESEND_FROM_EMAIL=Balari Tech <your-verified-domain@example.com>`
+- `RESEND_TO_EMAIL=your@email.com`
+Leave `VITE_API_BASE_URL` blank when the frontend and `/api/contact` are deployed together on the same Vercel project.
+
+## Local Development
+
+Run the client in one terminal:
+Frontend only:
+
+```bash
+npm run dev:client
+```
+
+Run the server in a second terminal:
+Full frontend + serverless function testing:
+
+```bash
+npm run dev:server
+cd client
+vercel dev
+```
+
+The client keeps using `/api/contact`. In local development, Vite proxies `/api/*` to `http://localhost:5000`.
+`vercel dev` is the best way to test the form locally because the contact endpoint is now a Vercel Function instead of a separate Express server.
+
+## Deploying to Vercel
+
+Set the Vercel project's Root Directory to `client`.
+
+The SPA rewrite lives in `client/vercel.json`, and the contact function lives in `client/api/contact.js`, so one Vercel project can serve both the landing page and the form endpoint.
+
+## Contact Form Security
+
+The server includes a few lightweight protections:
+The serverless function includes a few lightweight protections:
+
+- request validation and trimming
+- allowed-option checks for the help dropdown
+- a hidden honeypot field
+- a minimum form-fill time check
+- a simple in-memory rate limit per IP
+- a best-effort in-memory rate limit per runtime instance

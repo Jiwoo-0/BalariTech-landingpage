@@ -1,6 +1,6 @@
 import React from "react";
 import animatedBg from "../../assets/above-fold-bg.gif";
-import { Button } from "../../components/button";
+import { Button } from "../../components/Button";
 
 const AboveFold = () => {
   return (

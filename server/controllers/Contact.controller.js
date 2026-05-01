@@ -1,59 +1,52 @@
-const resend = require("../config/Resend");
-
-const getContactInfo = (req, res) => {
-  res.status(200).json({
-    endpoint:    "/api/contact",
-    methods:     ["GET", "POST"],
-    description: "Use POST with { name, email, message } to submit a message.",
-    requiredFields: {
-      name:    "string, min 2 chars",
-      email:   "valid email address",
-      message: "string, min 10 chars",
-    },
-  });
-};
+const resend = require("../config/resend");
+const {
+  buildContactEmailHtml,
+  buildContactEmailText,
+} = require("../utils/contactEmail");
 
 const submitContact = async (req, res) => {
-  const {
-    name,
-    email,
-    businessName,
-    websiteOrSocial,
-    needHelp,
-    projectDetails,
-    date,
-  } = req.body;
+  const fromEmail = process.env.RESEND_FROM_EMAIL;
+  const toEmail = process.env.RESEND_TO_EMAIL;
+
+  if (!resend || !fromEmail || !toEmail) {
+    return res.status(500).json({
+      success: false,
+      message:
+        "Server email settings are incomplete. Add RESEND_API_KEY, RESEND_FROM_EMAIL, and RESEND_TO_EMAIL.",
+    });
+  }
 
   try {
-    await resend.emails.send({
-      from: "Balari Tech <no-reply@contact.balari.space>",
-      to: "tech@balari.space",
-      subject: `New Contact Form Submission from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Business Name:</strong> ${businessName}</p>
-        <p><strong>Website or Social link:</strong> ${websiteOrSocial || "Not provided"}</p>
-        <p><strong>Help they need with:</strong> ${needHelp}</p>
-        <p><strong>Date scheduled:</strong> ${date}</p>
-        <p><strong>Project Details:</strong></p>
-        <p>${projectDetails}</p>
-      `,
+    const { error } = await resend.emails.send({
+      from: fromEmail,
+      to: [toEmail],
+      replyTo: req.contact.email,
+      subject: `New Balari contact form submission from ${req.contact.name}`,
+      html: buildContactEmailHtml(req.contact),
+      text: buildContactEmailText(req.contact),
     });
+
+    if (error) {
+      console.error("Resend API error:", error);
+
+      return res.status(502).json({
+        success: false,
+        message: "We couldn't send your message right now. Please try again.",
+      });
+    }
 
     return res.status(200).json({
       success: true,
       message: "Message sent successfully.",
     });
   } catch (error) {
-    console.error("Contact form error: ", error);
+    console.error("Contact form submission error:", error);
 
     return res.status(500).json({
       success: false,
-      error: "Something went wrong. Please try again later.",
+      message: "Something went wrong while sending your message.",
     });
   }
 };
 
-module.exports = { getContactInfo, submitContact };
+module.exports = { submitContact };
