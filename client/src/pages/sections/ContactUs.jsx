@@ -4,7 +4,7 @@ import { Button } from "../../components/Button";
 import { FormInput } from "../../components/FormInput";
 
 const API_BASE_URL =
-  import.meta.env.API_BASE_URL?.replace(/\/$/, "") ?? "";
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ?? "";
 
 const helpOptions = [
   "Website build",
