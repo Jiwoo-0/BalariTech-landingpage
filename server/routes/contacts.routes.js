@@ -1,5 +1,5 @@
 const express = require("express");
-const { submitContact } = require("../controllers/contact.controller");
+const { submitContact } = require("../controllers/contacts.controller");
 const { guardContactRequest } = require("../middleware/guardContact.middleware");
 const { validateContact } = require("../middleware/validateContact.middleware");
 
