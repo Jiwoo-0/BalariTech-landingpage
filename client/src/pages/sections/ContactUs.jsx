@@ -41,6 +41,13 @@ const validateEmail = (email) => {
   return emailRegex.test(email);
 };
 
+const formatDateToIso = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 const validateForm = (data) => {
   const newErrors = { ...initialErrors };
   let isValid = true;
@@ -86,6 +93,10 @@ const ContactUs = () => {
   const [errors, setErrors] = useState(initialErrors);
   const [isLoading, setIsLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
+
+  const minCompletionDate = formatDateToIso(
+    new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -159,6 +170,9 @@ const ContactUs = () => {
             <p className="text-white/80">
               Tell us a little about your business and what you need help with.
               We'll get back to you with the clearest next step we can.
+
+              <br/><br/>
+              <span className="italic text-primary">When sending: please wait up to 30 seconds, you should see a confirmation message below this note</span>
             </p>
           </div>
 
@@ -245,13 +259,21 @@ const ContactUs = () => {
               error={errors.projectDetails}
             />
 
-            <FormInput
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              error={errors.date}
-            />
+            <div className="flex flex-col gap-2">
+              <label htmlFor="date" className="font-body text-white">
+                Preferred completion date:
+              </label>
+              <FormInput
+                type="date"
+                id="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                min={minCompletionDate}
+                placeholder="Select a preferred date"
+                error={errors.date}
+              />
+            </div>
 
             <Button
               className="w-full"

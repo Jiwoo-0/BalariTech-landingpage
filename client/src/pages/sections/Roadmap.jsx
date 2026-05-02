@@ -44,7 +44,7 @@ const Roadmap = () => {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-3 ">
           {roadmaps.map((roadmap, index)=> (
             <RoadmapCard key={index} {...roadmap}/>
           ))}

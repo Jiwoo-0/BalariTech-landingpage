@@ -19,7 +19,7 @@ const WorkingWithBalari = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <WwCards
             title="Clear Work"
             description="You should always know what is happening, what is included, and what comes next. No vague handoffs. No guessing game."

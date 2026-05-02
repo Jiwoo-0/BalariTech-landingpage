@@ -22,17 +22,17 @@ export function RoadmapCard({
   color,
 }) {
   return (
-    <div className="border rounded-xl overflow-hidden flex flex-col gap-7">
+    <div className="border rounded-xl overflow-hidden flex flex-col gap-7 h-full">
       <div className={clsx("text-center pt-16 pb-7", cardVariants({ color }))}>
         <h3 className="text-white font-heading text-h3 font-bold">{title}</h3>
       </div>
-      <div className="px-10 flex flex-col gap-4">
+      <div className="px-10 flex flex-col gap-4 flex-1">
         <div>
           <h4 className="font-heading text-h4 font-medium">Best for</h4>
           <p>{bestFor}</p>
         </div>
         <div>
-          <h4 className="font-heading text-h4 font-medium">Copy</h4>
+          <h4 className="font-heading text-h4 font-medium">Recommendation</h4>
           <p>{copy}</p>
         </div>
         <div>

@@ -53,7 +53,7 @@ const Work = () => {
           <h2 className="text-h2 font-heading font-bold">How We Work</h2>
           <p>Simple, organized, and easier to follow.</p>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 ">
           {works.map((work, index) => (
             <WorkCards key={index} {...work} />
           ))}

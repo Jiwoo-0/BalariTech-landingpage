@@ -1,6 +1,11 @@
 import React from "react";
 import animatedBg from "../../assets/above-fold-bg.gif";
 import { Button } from "../../components/Button";
+import card1 from '../../assets/above-fold/Facebook Card.svg';
+import card2 from '../../assets/above-fold/Instagram Card.svg';
+import card3 from '../../assets/above-fold/LinkedIn Card.svg';
+import card4 from '../../assets/above-fold/Tiktok Card.svg';
+import card5 from '../../assets/above-fold/Youtube Shorts Card.svg';
 
 const AboveFold = () => {
   return (
@@ -57,8 +62,18 @@ const AboveFold = () => {
             {/* Right Content (Images/Media) */}
             <div className="w-[37%] hidden md:flex justify-end items-center h-full">
               {/* Placeholder for hero image/media */}
-              <div className="w-full h-96 bg-white/5 rounded-lg border border-white/10 flex items-center justify-center">
-                <p className="text-white/50">Hero Image</p>
+              <div className="w-full h-96 flex flex-col items-center justify-center">
+                <img src={card1}/>
+                <img src={card2}/>
+                <img src={card3}/>
+                <img src={card4}/>
+                <img src={card5}/>
+              </div>
+              <div className="w-full h-96 flex flex-col items-center justify-center">
+                <img src={card4}/>
+                <img src={card1}/>
+                <img src={card5}/>
+                <img src={card2}/>
               </div>
             </div>
           </div>

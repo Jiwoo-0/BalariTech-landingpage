@@ -51,7 +51,7 @@ const services = [
 const Services = () => {
   return (
     <Section bg="secondary" align="left" id="services">
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-16 max-[868px]:gap-10">
         <div>
           <h2 className="text-h2 font-heading font-bold">
             What we can help with
@@ -61,7 +61,7 @@ const Services = () => {
             right support behind it.
           </p>
         </div>
-        <div className="flex flex-col gap-32">
+        <div className="flex flex-col gap-32 max-[868px]:gap-14">
             {services.map((service, index) => (
             <ServiceCard key={index} {...service} />
             ))}

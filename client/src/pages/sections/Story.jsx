@@ -12,14 +12,14 @@ const Story = () => {
           <img src={logo} className="w-36" />
           <h2 className="font-heading text-h2 font-bold">exists</h2>
         </div>
-        <div className="flex gap-8">
-          <div className="w-[60%] h-full">
+        <div className="flex flex-col gap-8 md:flex-row">
+          <div className="w-full h-full md:w-[60%]">
             <div className="sticky w-full h-96 bg-black/5 rounded-lg border border-black/20 flex items-center justify-center">
-              <p>Our Story Video</p>
+              <p>Our Story Video Coming Soon...</p>
             </div>
           </div>
-          <div className="w-[40%] justify-start flex flex-col gap-8">
-            <h3 className="font-heading text-h3">
+          <div className="w-full justify-start flex flex-col gap-8 md:w-[40%]">
+            <h3 className="font-heading text-h3 text-center md:text-start">
               Built from the belief that good work should feel clear and fair.
             </h3>
             <p>

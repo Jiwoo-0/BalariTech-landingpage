@@ -52,9 +52,9 @@ const Footer = () => {
       <div className="absolute inset-0 bg-black/20" />
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto w-full flex gap-8 p-10">
-        <div className="w-[40%] flex flex-col gap-6">
-          <img src={logo} className="w-32" />
+      <div className="relative max-w-7xl mx-auto w-full flex flex-col gap-8 p-10 md:flex-row">
+        <div className="w-full flex flex-col gap-6 md:w-[40%]">
+          <img src={logo} className="w-full md:w-32" />
           <p className="text-sm">
             Websites and marketing systems for businesses that want a clearer
             digital presence and the right support behind it.
