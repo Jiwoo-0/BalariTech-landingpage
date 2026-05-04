@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { Section } from "../../components/Section";
 import { ServiceCard } from "../../components/ServiceCard";
 import service1 from "../../assets/services-section/Frame 71.png"
@@ -49,6 +49,11 @@ const services = [
 ];
 
 const Services = () => {
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  }
   return (
     <Section bg="secondary" align="left" id="services">
       <div className="flex flex-col gap-16 max-[868px]:gap-10">
