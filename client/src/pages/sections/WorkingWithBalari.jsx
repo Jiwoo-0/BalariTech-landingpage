@@ -3,6 +3,8 @@ import { Section } from "../../components/Section";
 import WwCards from "../../components/WwCards";
 import cardImage1 from "../../assets/working-with/Clear Work Card.png";
 import cardImage2 from "../../assets/working-with/Clear Work Card 2.png";
+import cardImage3 from "../../assets/working-with/Clear Work Card 3.png";
+import cardImage4 from "../../assets/working-with/Clear Work Card 4.png";
 import { Button } from "../../components/Button";
 
 const WorkingWithBalari = () => {
@@ -33,15 +35,17 @@ const WorkingWithBalari = () => {
           <WwCards
             title="Calm process"
             description="The work stays organized, feedback has a place, and decisions stay easier to make. We do our best to keep things moving without making them feel chaotic."
+            image={cardImage3}
           />
           <WwCards
             title="Support behind the build"
             description="We do not stop at making things look good. We think about structure, message, and what helps the business keep moving after launch."
+            image={cardImage4}
           />
         </div>
 
         <div className="mx-auto">
-          <Button size="lg" shadow="sm">Let's talk about your project</Button>
+          <Button href="#contact" size="lg" shadow="sm">Let's talk about your project</Button>
         </div>
       </div>
     </Section>

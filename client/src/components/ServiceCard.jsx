@@ -11,6 +11,7 @@ export function ServiceCard({
   buttonText,
   imageSrc,
   reverse = false,
+  onAction,
 }) {
   const contentOrderClass = reverse ? "min-[869px]:order-2" : "";
   const imageOrderClass = reverse ? "min-[869px]:order-1" : "";
@@ -34,7 +35,7 @@ export function ServiceCard({
         </div>
       </div>
       <div>
-        <Button variant="primary" size="lg">
+        <Button variant="primary" size="lg" onClick={onAction}>
           {buttonText}
         </Button>
       </div>

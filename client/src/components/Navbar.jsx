@@ -29,7 +29,13 @@ const Navbar = () => {
         <div className="bg-secondary flex rounded-full px-6 md:px-8 py-4 justify-between w-full max-w-7xl items-center">
           <div className="flex items-center gap-4">
             <div className="flex-shrink-0">
-              <img src={logo} className="h-6 md:h-7 w-auto" alt="Balari Logo" />
+              <a href="#">
+                <img
+                  src={logo}
+                  className="h-6 md:h-7 w-auto"
+                  alt="Balari Logo"
+                />
+              </a>
             </div>
           </div>
           <div className="flex max-[864px]:hidden gap-8 items-center justify-center">
@@ -43,7 +49,7 @@ const Navbar = () => {
               <Button
                 variant="primary"
                 size="sm"
-                href="#consult"
+                href="https://calendly.com/beana-balari/consult-call"
                 className="text-sm"
               >
                 Book Your Consult
@@ -135,7 +141,7 @@ const Navbar = () => {
             <Button
               variant="primary"
               size="md"
-              href="#consult"
+              href="https://calendly.com/beana-balari/consult-call"
               className="w-full text-center"
               onClick={() => setMenuOpen(false)}
             >

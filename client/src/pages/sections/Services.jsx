@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import { Section } from "../../components/Section";
 import { ServiceCard } from "../../components/ServiceCard";
+import Service_modal from "../../components/Service_modal";
 import service1 from "../../assets/services-section/Frame 71.png"
 import service2 from "../../assets/services-section/Frame 72.png"
 import service4 from "../../assets/services-section/Frame 74.png"
@@ -12,7 +13,7 @@ const services = [
     subtitle: "A clear, credible online home for your business.",
     description: "For businesses that need a website that feels aligned, easy to understand, and ready to support what comes next.",
     includes: ["UX/UI direction", "website design and build", "mobile responsiveness", "foundational SEO setup", "launch support"],
-    buttonText: "Ask about website builds",
+    buttonText: "View website builds",
     imageSrc: service1,
     reverse: false
   },
@@ -22,7 +23,7 @@ const services = [
     subtitle: "A cleaner path from attention to inquiry.",
     description: "For offers, campaigns, and focused conversion goals that need a dedicated page and stronger structure behind the journey.",
     includes: ["landing page strategy and layout", "conversion-focused structure", "forms and next-step flow", "tracking setup", "optional funnel support"],
-    buttonText: "Ask about landing pages",
+    buttonText: "View landing pages",
     imageSrc: service2,
     reverse: true
   },
@@ -32,7 +33,7 @@ const services = [
     subtitle: "Ongoing support that helps the business keep moving after launch.",
     description: "For businesses that need help refining, improving, and building on what is already there — without starting from scratch every time.",
     includes: ["website updates", "funnel and content support", "email and marketing support", "reporting rhythm", "ongoing recommendations"],
-    buttonText: "Ask about growth support",
+    buttonText: "View growth support",
     imageSrc: service1,
     reverse: false
   },
@@ -42,18 +43,15 @@ const services = [
     subtitle: "Creative support that stays aligned with the brand and message.",
     description: "For businesses that need visual, audio, or content execution that actually fits the direction of the business.",
     includes: ["video editing", "audio editing", "graphic support", "light content support", "brand-aligned creative assets"],
-    buttonText: "Ask about website builds",
+    buttonText: "View content support",
     imageSrc: service4,
     reverse: true
   }
 ];
 
 const Services = () => {
-  const [modal, setModal] = useState(false);
+  const [selectedServiceTitle, setSelectedServiceTitle] = useState(null);
 
-  const toggleModal = () => {
-    setModal(!modal);
-  }
   return (
     <Section bg="secondary" align="left" id="services">
       <div className="flex flex-col gap-16 max-[868px]:gap-10">
@@ -67,12 +65,22 @@ const Services = () => {
           </p>
         </div>
         <div className="flex flex-col gap-32 max-[868px]:gap-14">
-            {services.map((service, index) => (
-            <ServiceCard key={index} {...service} />
-            ))}
-
+          {services.map((service) => (
+            <ServiceCard
+              key={service.title}
+              {...service}
+              onAction={() => setSelectedServiceTitle(service.title)}
+            />
+          ))}
         </div>
       </div>
+      <Service_modal
+        isOpen={Boolean(selectedServiceTitle)}
+        services={services}
+        selectedServiceTitle={selectedServiceTitle}
+        onClose={() => setSelectedServiceTitle(null)}
+        onSelectService={setSelectedServiceTitle}
+      />
     </Section>
   );
 };

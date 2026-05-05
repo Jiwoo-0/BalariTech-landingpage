@@ -38,7 +38,7 @@ const Story = () => {
               work stays more aligned from the start — from structure and
               message to launch and next steps.
             </p>
-            <Button>Book a free consult</Button>
+            <Button href="https://calendly.com/beana-balari/consult-call">Book a free consult</Button>
           </div>
         </div>
       </div>

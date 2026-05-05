@@ -39,7 +39,7 @@ const AboveFold = () => {
               {/* CTA Buttons */}
               <div className="flex flex-col gap-3 pt-4">
                 <Button 
-                  href="#consult" 
+                  href="https://calendly.com/beana-balari/consult-call" 
                   variant="primary" 
                   size="lg"
                   shadow="2xl"
@@ -48,13 +48,13 @@ const AboveFold = () => {
                   Book a free 20-min consult
                 </Button>
                 <Button 
-                  href="#roadmap" 
+                  href="#work" 
                   variant="secondary" 
                   size="lg"
                   shadow="2xl"
                   className="w-full md:w-96"
                 >
-                  The Balari Roadmap
+                  See how we work
                 </Button>
               </div>
             </div>
